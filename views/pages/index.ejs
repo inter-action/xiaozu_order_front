@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../partials/headers %>
+  <script type="text/javascript" src=""></script>
+  <style type="text/css">
+    li.form-group {
+      margin-left: 1em;
+      margin-top: 1em;
+      width: 20em;
+    }
+    li.form-group.ng-binding.ng-scope {
+      line-height: 33px;
+    }
+
+    button.btn.btn-default {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <% include ../partials/header %>
+  <!-- -->
+  
+  <div ng-app="myApp" class="container-fluid">
+
+    <div class="row" ng-controller="IndexController">
+      <div class="col-lg-2">
+        <!-- STARTS: NEW CONTENT -->
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation" ng-repeat="menu in menus" ng-class="{'active': $index == focusedIdx}"><a href="#" ng-click="changeCate($index)">{{menu.name.name}}</a></li>
+        </ul>
+        <!-- ends: NEW CONTENT -->
+      </div>
+
+      <div class="col-lg-9">
+        <!-- start: RIGHT PANEL -->
+
+        <div ng-if="isCateA">
+          <div class="panel panel-default" ng-repeat="merchantContent in curMenu.contents">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{merchantContent.merchants_name}}</h3>
+            </div>
+            <div class="panel-body">
+              <!-- start: PANEL BODY -->
+              <div >
+                <div class="panel panel-default" >
+                  <div class="panel-heading">
+                    <h3 class="panel-title">荤素配</h3>
+                  </div>
+                  <div class="panel-body">
+                    <form>
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="panel panel-default">
+                            <!-- start: COMBOS -->
+                            <div class="panel-heading">{{merchantContent.contents[0].contents[0].combo_name}}</div>
+                            <div class="panel-body">
+                              <ul>
+                                <li ng-repeat="food in merchantContent.contents[0].contents[0].foods">
+                                  <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 1, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <!-- end: COMBOS -->
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="panel panel-default">
+                            <!-- start: COMBOS -->
+                            <div class="panel-heading">{{merchantContent.contents[0].contents[1].combo_name}}</div>
+                            <div class="panel-body">
+                              <ul>
+                                <li ng-repeat="food in merchantContent.contents[0].contents[1].foods">
+                                  <div class="checkbox" >
+                                    <label>
+                                      <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 2, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <!-- end: COMBOS -->
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="panel panel-default">
+                            <!-- start: COMBOS -->
+                            <div class="panel-heading">{{merchantContent.contents[0].contents[2].combo_name}}</div>
+                            <div class="panel-body">
+                              <ul >
+                                <li ng-repeat="food in merchantContent.contents[0].contents[2].foods">
+                                  <div class="radio" >
+                                    <label>
+                                      <input type="radio" name="group1" ng-click="chkCombo($event, merchantContent.bid, 3, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <!-- end: COMBOS -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-2 col-md-offset-10">
+                          <button type="button" class="btn btn-primary" ng-click="comboAdd(merchantContent.bid)">添加</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="panel panel-default" ng-if="merchantContent.contents[1]">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{merchantContent.contents[1].subcate_name}}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <ul class="form-inline">
+                      <li ng-repeat="food in merchantContent.contents[1].foods" class="form-group">
+                        {{food.name}} {{food.price}}元
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <!-- end: PANEL BODY -->
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="!isCateA">
+          <div class="panel panel-default" ng-repeat="merchantContent in curMenu.contents">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{merchantContent.merchants_name}}</h3>
+            </div>
+            <div class="panel-body">
+              <!-- start: PANEL CONTENT -->
+
+              <div ng-repeat="subCateContents in merchantContent.contents">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{subCateContents.subcate_name}}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <ul class="form-inline">
+                      <li ng-repeat="food in subCateContents.foods" class="form-group">
+                        {{food.name}} {{food.price}}元
+                        <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addSingle(subCateContents.foods[$index])">
+                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- end: PANEL CONTENT -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- end: RIGHT PANEL -->
+      </div>
+    </div>
+
+  </div>
+  
+  <% include ../partials/footer %>
+</body>
+</html>
