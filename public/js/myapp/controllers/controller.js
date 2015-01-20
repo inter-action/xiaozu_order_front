@@ -122,7 +122,7 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                     if (result.success){
                         alert('添加成功');
                     }else{
-                        alert('添加失败');
+                        alert('添加失败: ' + result.msg);
                     }
                 });
             };

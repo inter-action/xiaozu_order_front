@@ -78,7 +78,7 @@
                                 <li ng-repeat="food in merchantContent.contents[0].contents[1].foods">
                                   <div class="checkbox" >
                                     <label>
-                                      <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 2, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
+                                      <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 2, merchantContent.contents[0].contents[1].foods[$index])"> {{food.name}}
                                     </label>
                                   </div>
                                 </li>
@@ -96,7 +96,7 @@
                                 <li ng-repeat="food in merchantContent.contents[0].contents[2].foods">
                                   <div class="radio" >
                                     <label>
-                                      <input type="radio" name="group1" ng-click="chkCombo($event, merchantContent.bid, 3, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
+                                      <input type="radio" name="group1" ng-click="chkCombo($event, merchantContent.bid, 3, merchantContent.contents[0].contents[2].foods[$index])"> {{food.name}}
                                     </label>
                                   </div>
                                 </li>

@@ -63,12 +63,13 @@ router.post '/order/combo', (req, res)->
 
     _.each data.foodIds, (foodId)->
         postDataArr.push(['food_id[]', foodId])
+        postDataArr.push(["dandian[#{foodId}]", '1'])
 
     # do post data here
     placeComboOrder postDataArr, (err, httpResponse, body)->
         res.send 500, MSG_BAD_GATEWAY if err
         orderResult = JSON.parse(body)
-        if orderResult.status is 1 then res.json({success: true}) else res.json({success: false})
+        if orderResult.status is 1 then res.json({success: true}) else res.json({success: false, msg: orderResult.info})
 
 
 ###
