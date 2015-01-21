@@ -124,6 +124,7 @@ Project Init Procedure:
         在最终下单的时候,看看有没有json接口将订单信息拿到比对下再最终提交: 忽略, 没必要
         前端bid对应的校验加上
         整理上传github
+        nodejs 的登录拦截器
         
 
     PENDING
@@ -138,7 +139,8 @@ Project Init Procedure:
         https://github.com/SublimeLinter/SublimeLinter-jshint
         configure a express interceptor
 
-        设置登录时常
+        设置登录 session 时常
         angularjs的登录拦截器
-        nodejs 的登录拦截器
         启动时候的用户状态清空
+        菜单页面现在有问题, 不知道是否是切换angularjs版本造成的
+        测试angularjs对$http请求的拦截

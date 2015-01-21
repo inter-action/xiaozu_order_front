@@ -65,10 +65,7 @@ app.use session(sessionOption)
 app.use (req, res, next)->
     console.log("[LOGIN INTERCEPTOR] --> #{req.method.toLowerCase()}, #{req.path}, #{JSON.stringify(req.session.user)}")
     if req.method.toLowerCase() == 'post' and req.path.indexOf('login') == -1 and not req.session.user
-        if req.xhr
-            res.json({code: CODES.NOT_LOGIN})
-        else
-            res.redirect '/#/login' #login page
+        res.status(401).end()
     else
         next()
 
