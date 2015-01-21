@@ -117,6 +117,7 @@ Project Init Procedure:
         最终的下单接口: 忽略, 没必要
         在最终下单的时候,看看有没有json接口将订单信息拿到比对下再最终提交: 忽略, 没必要
         前端bid对应的校验加上
+        整理上传github
         
 
     PENDING
@@ -126,4 +127,4 @@ Project Init Procedure:
             下单的日志标示
             
         config jshint
-        整理上传github
+        删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
