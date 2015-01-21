@@ -101,6 +101,9 @@ Project Init Procedure:
         [nodejs routes unit test](http://javascriptplayground.com/blog/2014/07/testing-express-routes/)
             这个方法倒是可以来用作单元测试, 总感觉缺少些原来的简洁性, 当然最好的办法就是end to end 的test
             
+    ## angularjs
+        [angularjs api doc](http://www.ngnice.com/docs/api)
+
     ## others
         [server side event] (http://www.html5rocks.com/en/tutorials/eventsource/basics/)
         [socketio chat demo](http://socket.io/get-started/chat/)
@@ -109,6 +112,9 @@ Project Init Procedure:
     this is a project build with express framework 4.xx
 
 
+# develop env
+    start mongo
+        mongod --config /usr/local/etc/mongod.conf
 
 # TODOS
     DONE
@@ -127,4 +133,7 @@ Project Init Procedure:
             下单的日志标示
             
         config jshint
+
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
+        https://github.com/SublimeLinter/SublimeLinter-jshint
+        configure a express interceptor

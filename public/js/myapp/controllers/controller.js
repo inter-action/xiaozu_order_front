@@ -132,3 +132,16 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
         }
     ]
 );
+
+controllerModule.controller('LoginController', ['$scope', function($scope){
+
+    $scope.username = '';
+
+    $scope.submit = function(){
+        /*
+        validate form
+        do login
+            if success return order page
+        */
+    }
+}]);
