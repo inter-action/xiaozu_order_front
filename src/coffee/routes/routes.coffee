@@ -67,9 +67,11 @@ router.post '/order/combo', (req, res)->
 
     # do post data here
     placeComboOrder postDataArr, (err, httpResponse, body)->
-        res.send 500, MSG_BAD_GATEWAY if err
-        orderResult = JSON.parse(body)
-        if orderResult.status is 1 then res.json({success: true}) else res.json({success: false, msg: orderResult.info})
+        if err
+            res.send 500, MSG_BAD_GATEWAY 
+        else
+            orderResult = JSON.parse(body)
+            if orderResult.status is 1 then res.json({success: true}) else res.json({success: false, msg: orderResult.info})
 
 
 ###
@@ -89,9 +91,38 @@ router.post '/order/single', (req, res)->
     ]
 
     placeSingleOrder postDataArr, (err, httpResponse, body)->
-        res.send 500, MSG_BAD_GATEWAY if err
-        orderResult = JSON.parse(body)
-        if orderResult.status is 1 then res.json({success: true}) else res.json({success: false})
+        if err
+            res.send 500, MSG_BAD_GATEWAY
+        else
+            orderResult = JSON.parse(body)
+            if orderResult.status is 1 then res.json({success: true}) else res.json({success: false})
+
+
+router.post '/login', (req, res)->
+    username = req.body.username
+    assert.ok(username)
+
+    dao.UserModel.findOne {username: username}, (err, user)->
+        res.send(500, MSG_BAD_GATEWAY) if err
+        if user.isLogin is 1
+            res.json({success: false, msg: "#{username} is logined by this ip:#{user.ip}"})
+        else
+            user.isLogin = 1
+            user.ip = req.ip
+            user.save (err, instance)->
+                if err then res.send(500, MSG_BAD_GATEWAY) else res.json({success: true})
+
+
+#------------ start: users routes
+# user lists
+router.get '/users', (req, res)->
+    dao.UserModel.find {}, (err, users)->
+        if err
+            res.send 500, MSG_BAD_GATEWAY
+        else
+            res.json(users)
+
+#------------ ends: users routes
 
 
 placeComboOrder = (dataArr, callback)->

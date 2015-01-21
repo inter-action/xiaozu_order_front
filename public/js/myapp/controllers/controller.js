@@ -1,5 +1,5 @@
 /* jshint undef: true, unused: true, devel:true */
-/* global angular: true , _: true
+/* global angular: true , _: true, window: true
 */
 var controllerModule = angular.module('myApp.controller', []);
 
@@ -133,15 +133,34 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
     ]
 );
 
-controllerModule.controller('LoginController', ['$scope', function($scope){
-
-    $scope.username = '';
+controllerModule.controller('LoginController', ['$scope', 'UserService', function($scope, UserService){
 
     $scope.submit = function(){
-        /*
-        validate form
-        do login
-            if success return order page
-        */
-    }
+        UserService.login($scope.username).then(function(result){
+            result = result.data;
+
+            if (result.success){
+                window.location = '/#/';
+            }else{
+                alert(result.msg);
+            }
+        });
+    };
+
+
+    $scope.isInvalid = function(){
+        if (!$scope.username){
+            return true;
+        }
+
+        return false;
+    };
+
+    //load users
+    UserService.list().then(function(result){
+        result = result.data;
+
+        $scope.users = result;
+    });
+
 }]);

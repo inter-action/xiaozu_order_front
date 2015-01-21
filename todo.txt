@@ -137,3 +137,8 @@ Project Init Procedure:
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
         https://github.com/SublimeLinter/SublimeLinter-jshint
         configure a express interceptor
+
+        设置登录时常
+        angularjs的登录拦截器
+        nodejs 的登录拦截器
+        启动时候的用户状态清空

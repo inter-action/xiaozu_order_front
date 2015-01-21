@@ -22,3 +22,21 @@ serviceModule.factory('MenuService', ['$http',
         return api;
     }
 ]);
+
+
+serviceModule.factory('UserService', ['$http',
+    function($http) {
+        var api = {};
+
+        //登录
+        api.login = function(username){
+            return $http.post('/login', {username: username});
+        };
+        
+        api.list = function(){
+            return $http.get('/users');
+        };
+        
+        return api;
+    }
+]);
