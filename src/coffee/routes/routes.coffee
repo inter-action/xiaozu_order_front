@@ -11,6 +11,8 @@ log = require '../logger/logger'
 common = require '../common/common'
 dao = require '../dao/dao'
 util = require '../util/util'
+CODES = require('../constant/constant').CODES 
+
 
 router = express.Router()
 
@@ -71,7 +73,7 @@ router.post '/order/combo', (req, res)->
             res.send 500, MSG_BAD_GATEWAY 
         else
             orderResult = JSON.parse(body)
-            if orderResult.status is 1 then res.json({success: true}) else res.json({success: false, msg: orderResult.info})
+            if orderResult.status is 1 then res.json({code: CODES.SUCCESS}) else res.json({code: CODES.FAILURE, msg: orderResult.info})
 
 
 ###
@@ -95,22 +97,45 @@ router.post '/order/single', (req, res)->
             res.send 500, MSG_BAD_GATEWAY
         else
             orderResult = JSON.parse(body)
-            if orderResult.status is 1 then res.json({success: true}) else res.json({success: false})
+            if orderResult.status is 1 then res.json({code: CODES.SUCCESS}) else res.json({code: CODES.FAILURE})
 
-
+# 抢占式登陆, 一个用户名如果被登陆, 除非这个用户退出, 否则不能登陆
 router.post '/login', (req, res)->
     username = req.body.username
     assert.ok(username)
 
+    #todo: 找不到用户怎么办
     dao.UserModel.findOne {username: username}, (err, user)->
         res.send(500, MSG_BAD_GATEWAY) if err
+        res.send(404, 'not found') if not user
+
         if user.isLogin is 1
-            res.json({success: false, msg: "#{username} is logined by this ip:#{user.ip}"})
+            res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
         else
             user.isLogin = 1
             user.ip = req.ip
             user.save (err, instance)->
-                if err then res.send(500, MSG_BAD_GATEWAY) else res.json({success: true})
+                if err
+                    res.send(500, MSG_BAD_GATEWAY) 
+                else
+                    req.session.user = instance 
+                    res.json({code: CODES.SUCCESS})
+
+# 退出
+router.post '/logout', (req, res)->
+    if req.session.user
+        dao.UserModel.findOne {username: req.session.user.username}, (err, user)->
+            res.send(500, MSG_BAD_GATEWAY) if err
+            res.send(404, 'not found') if not user
+
+            user.isLogin = 0
+            user.ip = req.ip
+            user.save (err, userInstance)->
+                if err
+                    res.send(500, MSG_BAD_GATEWAY)
+                else
+                    req.session.destroy (err)->#we dont care if success or not in here
+                    res.json({code: CODES.SUCCESS})
 
 
 #------------ start: users routes

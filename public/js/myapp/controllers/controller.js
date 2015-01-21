@@ -37,7 +37,7 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                 MenuService.singleAdd(data).then(function(result){
                     result = result.data;
 
-                    if (result.success){
+                    if (result.code === 0x00){
                         alert('添加成功');
                     }else{
                         alert('添加失败');
@@ -119,7 +119,7 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                 MenuService.comboAdd(postdata).then(function(result){
                     result = result.data;
 
-                    if (result.success){
+                    if (result.code === 0x00){
                         alert('添加成功');
                     }else{
                         alert('添加失败: ' + result.msg);
@@ -139,7 +139,7 @@ controllerModule.controller('LoginController', ['$scope', 'UserService', functio
         UserService.login($scope.username).then(function(result){
             result = result.data;
 
-            if (result.success){
+            if (result.code === 0x00){
                 window.location = '/#/';
             }else{
                 alert(result.msg);

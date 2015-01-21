@@ -3,17 +3,21 @@
 @date 2014.11.4
 ###
 
+# node dependencies
+http = require 'http'
+path = require 'path'
 
 #express dependencies
 express = require 'express'
-path = require 'path'
 cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
-http = require 'http'
+session = require 'express-session'
+
 
 # my dependencies
 log = require './logger/logger'
 routes = require './routes/routes'
+CODES = require('./constant/constant').CODES 
 
 ROOT_PATH = path.normalize(__dirname + '/../../')
 
@@ -41,7 +45,7 @@ app.set('view engine', 'ejs')
 #enable trust proxy for  X-Forwarded-* to work, 这个头信息记录的是ip地址, 如果proxy不被信任,这个节点的值就不可靠
 app.enable('trust proxy')
 
-#SET UP MIDDLEWARES
+# ------ START: SET UP MIDDLEWARES
 
 ## set up body-parser middleware
 app.use bodyParser.urlencoded({ extended: false })  #parse application/x-www-form-urlencoded
@@ -51,6 +55,22 @@ app.use bodyParser.json()    # parse application/json
 ## set up cookieParser middleware
 app.use cookieParser()
 
+## setting up session
+sessionOption =
+    secret: 'secret_key'
+    resave: false
+    saveUninitialized: true
+app.use session(sessionOption)
+
+app.use (req, res, next)->
+    console.log("[LOGIN INTERCEPTOR] --> #{req.method.toLowerCase()}, #{req.path}, #{JSON.stringify(req.session.user)}")
+    if req.method.toLowerCase() == 'post' and req.path.indexOf('login') == -1 and not req.session.user
+        if req.xhr
+            res.json({code: CODES.NOT_LOGIN})
+        else
+            res.redirect '/#/login' #login page
+    else
+        next()
 
 # set up routes
 app.use('/', routes)
