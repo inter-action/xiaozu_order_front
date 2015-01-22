@@ -132,6 +132,7 @@ Project Init Procedure:
         angularjs的登录拦截器
         设置登录 session 时常
         界面上加入退出, 登录
+        启动时候的用户状态清空
         
 
     PENDING
@@ -146,5 +147,4 @@ Project Init Procedure:
         https://github.com/SublimeLinter/SublimeLinter-jshint
         用q.js 重构部分代码
 
-        启动时候的用户状态清空
 
