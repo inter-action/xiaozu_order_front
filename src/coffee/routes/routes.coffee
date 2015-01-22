@@ -114,9 +114,9 @@ router.post '/login', (req, res)->
             res.send(500, MSG_BAD_GATEWAY) if err
             res.send(404, 'not found') if not user
 
-            if user.isLogin is 1
+            if user.isLogin is 1 and uesr.ip != req.ip
                 res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
-            else
+            else # user is not login or user is login and his/her ip is same with the record in database
                 user.isLogin = 1
                 user.ip = req.ip
                 user.save (err, instance)->

@@ -85,5 +85,12 @@ exports.script =
                     assert.ok(docs.length == users.length)
                     console.log "successfully isnerted #{docs.length} records"
 
+    # 重置用户登录状态
+    resetUserLoginState: ->
+        exports.UserModel.update {}, {isLogin: 0}, (err, numAffected)->
+            if err then console.log err else console.log "#{numAffected} records updated"
+
+# ----- start: module init
+exports.script.resetUserLoginState()
 
 console.log('** DAO MODULE LOADED **')
