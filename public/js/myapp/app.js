@@ -4,23 +4,24 @@
 var myApp = angular.module('myApp', ['myApp.controller', 'myApp.service', 'ngRoute']);
 
 myApp.config(['$routeProvider', function($routeProvider){
-	$routeProvider.
-		when('/', {
-			templateUrl: '/partials/index.html'
-		})
-		.when('/login', {
-			templateUrl: '/partials/login.html',
-			controller: 'LoginController'
-		})
-		.when('/404', {
-			templateUrl: '/404.html'
-		})
-		.otherwise({
-			redirectTo: '/404'
-		});
+    $routeProvider
+        .when('/', {
+            templateUrl: '/partials/index.html',
+            controller: 'IndexController'
+        })
+        .when('/login', {
+            templateUrl: '/partials/login.html',
+            controller: 'LoginController'
+        })
+        .when('/404', {
+            templateUrl: '/404.html'
+        })
+        .otherwise({
+            redirectTo: '/404'
+        });
 }]);
 
-
+// $http 拦截器
 myApp.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push(function ($q) {
         return {
@@ -29,7 +30,7 @@ myApp.config(['$httpProvider', function ($httpProvider) {
                 return response;
             },
             'responseError': function (rejection) {
-            	//for status code greater than 3xx, this func will be called
+                //for status code greater than 3xx, this func will be called
                 if(rejection.status === 401) {
                     window.location = '/#/login';
                 }

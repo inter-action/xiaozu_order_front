@@ -13,18 +13,17 @@
   }
 </style>
 <div class="container-fluid">
-  <div class="row" ng-controller="IndexController">
+  <div class="row">
     <div class="col-lg-2">
       <!-- STARTS: NEW CONTENT -->
       <ul class="nav nav-pills nav-stacked">
-        <li role="presentation" ng-repeat="menu in menus" ng-class="{'active': $index == focusedIdx}"><a href="#" ng-click="changeCate($index)">{{menu.name.name}}</a></li>
+        <li role="presentation" ng-repeat="menu in menus" ng-class="{'active': $index == focusedIdx}" ng-click="changeCate($index)"><a href="javascript:void(0);">{{menu.name.name}}</a></li>
       </ul>
       <!-- ends: NEW CONTENT -->
     </div>
 
     <div class="col-lg-9">
       <!-- start: RIGHT PANEL -->
-
       <div ng-if="isCateA">
         <div class="panel panel-default" ng-repeat="merchantContent in curMenu.contents">
           <div class="panel-heading">

@@ -7,14 +7,6 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
         function(MenuService, $scope) {
             $scope.focused_row = 0;
 
-            //init page
-            var loadPage = function() {
-                MenuService.list().then(function(data) {
-                    $scope.menus = data.data;
-                    $scope.changeCate(0);
-                });
-            };
-
             var isCateA = function(menu){
                 return menu.name.link.indexOf('/category/a') !== -1;
             };
@@ -128,7 +120,10 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
             };
 
             //init page
-            loadPage();
+            MenuService.list().then(function(data) {
+                $scope.menus = data.data;
+                $scope.changeCate(0);
+            });
         }
     ]
 );
