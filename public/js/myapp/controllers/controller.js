@@ -1,5 +1,5 @@
 /* jshint undef: true, unused: true, devel:true */
-/* global angular: true , _: true, window: true
+/* global angular: true , _: true, sessionStorage: true
 */
 var controllerModule = angular.module('myApp.controller', []);
 
@@ -128,14 +128,16 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
     ]
 );
 
-controllerModule.controller('LoginController', ['$scope', 'UserService', function($scope, UserService){
+controllerModule.controller('LoginController', ['$scope', 'UserService', '$location', function($scope, UserService, $location){
 
     $scope.submit = function(){
         UserService.login($scope.username).then(function(result){
             result = result.data;
 
             if (result.code === 0x00){
-                window.location = '/#/';
+                //sessionStorage does not support object, only string it seems
+                sessionStorage.user = JSON.stringify(result.data);
+                $location.path('/');
             }else{
                 alert(result.msg);
             }

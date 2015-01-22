@@ -104,22 +104,27 @@ router.post '/login', (req, res)->
     username = req.body.username
     assert.ok(username)
 
-    #todo: 找不到用户怎么办
-    dao.UserModel.findOne {username: username}, (err, user)->
-        res.send(500, MSG_BAD_GATEWAY) if err
-        res.send(404, 'not found') if not user
-
-        if user.isLogin is 1
-            res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
+    if req.session.user
+        if username == req.session.username
+            res.json({code: CODES.SUCCESS, data: req.session.user})
         else
-            user.isLogin = 1
-            user.ip = req.ip
-            user.save (err, instance)->
-                if err
-                    res.send(500, MSG_BAD_GATEWAY) 
-                else
-                    req.session.user = instance 
-                    res.json({code: CODES.SUCCESS})
+            res.json({code: CODES.FAILURE, msg: "you already logined with user: #{req.session.username}"})
+    else
+        dao.UserModel.findOne {username: username}, (err, user)->
+            res.send(500, MSG_BAD_GATEWAY) if err
+            res.send(404, 'not found') if not user
+
+            if user.isLogin is 1
+                res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
+            else
+                user.isLogin = 1
+                user.ip = req.ip
+                user.save (err, instance)->
+                    if err
+                        res.send(500, MSG_BAD_GATEWAY) 
+                    else
+                        req.session.user = instance 
+                        res.json({code: CODES.SUCCESS, data: instance})
 
 # 退出
 router.post '/logout', (req, res)->
@@ -136,6 +141,8 @@ router.post '/logout', (req, res)->
                 else
                     req.session.destroy (err)->#we dont care if success or not in here
                     res.json({code: CODES.SUCCESS})
+    else
+        res.json({code: CODES.FAILURE, msg: 'you are not logged-in'})
 
 
 #------------ start: users routes
