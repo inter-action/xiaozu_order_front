@@ -19,6 +19,10 @@ myApp.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/login.html',
             controller: 'LoginController'
         })
+        .when('/ordertoday', {
+            templateUrl: '/partials/ordertoday.html',
+            controller: 'OrderTodayController'
+        })
         .when('/404', {
             templateUrl: '/404.html'
         })

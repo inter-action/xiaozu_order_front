@@ -34,6 +34,7 @@ controllerModule.controller('TopBannerController', ['$scope', 'UserService', fun
 controllerModule.controller('IndexController', ['MenuService', '$scope',
         function(MenuService, $scope) {
             $scope.focused_row = 0;
+            var user = JSON.parse(sessionStorage.user);
 
             var isCateA = function(menu){
                 return menu.name.link.indexOf('/category/a') !== -1;
@@ -51,7 +52,11 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
             $scope.addSingle = function(food){
                 var data = {
                     fid: food.fid,
-                    bid: food.bid
+                    bid: food.bid,
+                    audit:{
+                        foods: food.name,
+                        username: user.username
+                    }
                 };
 
                 MenuService.singleAdd(data).then(function(result){
@@ -134,6 +139,11 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                     return _e.form_value;
                 });
 
+                postdata.audit = {
+                    foods: _.map(concated, function(_e){ return _e.name; }).concat(_ref[3][0].name).join(','),
+                    username: user.username
+                };
+
                 console.log('postdata for combo is: ' + JSON.stringify(postdata));
 
                 MenuService.comboAdd(postdata).then(function(result){
@@ -189,4 +199,17 @@ controllerModule.controller('LoginController', ['$scope', 'UserService', '$locat
         $scope.users = result;
     });
 
+}]);
+
+
+controllerModule.controller('OrderTodayController', ['$scope', 'CommonService', function($scope, CommonService){
+    CommonService.auditlogs().then(function(result){
+        result = result.data;
+
+        if (result.code === 0x00 && result.data.length !== 0){
+            $scope.datas = _.map(result.data, function(_e){
+                return JSON.parse(_e.body);
+            });
+        }
+    });
 }]);

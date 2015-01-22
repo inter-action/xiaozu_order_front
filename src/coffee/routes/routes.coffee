@@ -35,6 +35,7 @@ router.get '/menus', (req, res)->
         res.json(docs)
     )
 
+
 ###
 荤素配点餐
     data = [
@@ -49,6 +50,8 @@ router.get '/menus', (req, res)->
         bid
         foodIds
         zhushi
+        audit: JSON str
+            {foods: , username}
 ###
 router.post '/order/combo', (req, res)->
     data = req.body.data
@@ -56,6 +59,7 @@ router.post '/order/combo', (req, res)->
     assert.ok(data.bid)
     assert.ok(data.foodIds.length isnt 0)
     assert.ok(data.zhushi)
+    assert.ok(data.audit) # this seems a security issue, it's not big deal since this app will run in a trusted env
 
     postDataArr = [
         ['bid', data.bid]
@@ -72,6 +76,9 @@ router.post '/order/combo', (req, res)->
         if err
             res.send 500, MSG_BAD_GATEWAY 
         else
+            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.types.PLACE_ORDER}
+            auditInstance.save() # we dont care if success or not
+
             orderResult = JSON.parse(body)
             if orderResult.status is 1 then res.json({code: CODES.SUCCESS}) else res.json({code: CODES.FAILURE, msg: orderResult.info})
 
@@ -81,10 +88,14 @@ router.post '/order/combo', (req, res)->
         fid:MTYwMTE3
         bid:NjA3MTM=
         quantity:1
+        audit: JSON str
+            {foods: , username}
+
 ###
 router.post '/order/single', (req, res)->
     data = req.body.data
     assert.ok(data.fid and data.bid)
+    assert.ok(data.audit)
 
     postDataArr = [
         ['fid', data.fid]
@@ -96,6 +107,9 @@ router.post '/order/single', (req, res)->
         if err
             res.send 500, MSG_BAD_GATEWAY
         else
+            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.types.PLACE_ORDER}
+            auditInstance.save() # we dont care if success or not
+
             orderResult = JSON.parse(body)
             if orderResult.status is 1 then res.json({code: CODES.SUCCESS}) else res.json({code: CODES.FAILURE})
 
@@ -156,6 +170,12 @@ router.get '/users', (req, res)->
 
 #------------ ends: users routes
 
+# ---- 审计数据
+router.get '/auditlogs', (req, res)->
+    now = new Date()
+    today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    dao.AuditLogModel.find {createdTime: { $gte: today}}, (err, audits)->
+        if err then res.send(500, MSG_BAD_GATEWAY) else res.json({code: CODES.SUCCESS, data: audits})
 
 placeComboOrder = (dataArr, callback)->
     url = 'http://fuhua.xiaozufan.com/Index/orderadd'
@@ -166,7 +186,6 @@ placeSingleOrder = (dataArr, callback)->
     util.request.postJSONRaw url, dataArr, callback
 
 
-#----------- ends: MENU ENTRY ROUTES
 
 
 module.exports = router

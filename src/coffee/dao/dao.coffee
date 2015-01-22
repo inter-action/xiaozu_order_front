@@ -46,7 +46,23 @@ UserSchemaOption =
 exports.UserModel = mongoose.model('User', userSchema = mongoose.Schema(UserSchemaOption))
 # ----------- end: user definition
 
+# ----------- start: AuditLog definition
+AuditLogSchemaOption
+    body:
+        type: String
+        required: true
+    type:
+        type: Number
+        required: true
+    createdTime:
+        type: Date
+        default: Date.now
 
+exports.AuditLogModel = mongoose.model('AuditLog', auditLogSchemaInstance = mongoose.Schema(AuditLogSchemaOption))
+exports.AuditLogModel.typies =
+    PLACE_ORDER: 0x00 # 下订单
+
+# ----------- end: AuditLog definition
 
 
 MENU_COLLECTION = 'menu'
