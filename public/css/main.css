@@ -1,0 +1,11 @@
+footer#footer {
+    width: 100%;
+    border: 1px; solid lightgray;
+    text-align: center;
+    padding: 1em
+}
+
+/* order merchant heading */
+.panel-heading.bg-primary{
+    background-color: #5bc0de;
+}
