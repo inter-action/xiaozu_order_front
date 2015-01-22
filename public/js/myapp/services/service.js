@@ -33,9 +33,15 @@ serviceModule.factory('UserService', ['$http',
             return $http.post('/login', {username: username});
         };
         
+        api.logout = function(){
+            return $http.post('/logout');
+        };
+
         api.list = function(){
             return $http.get('/users');
         };
+
+
         
         return api;
     }

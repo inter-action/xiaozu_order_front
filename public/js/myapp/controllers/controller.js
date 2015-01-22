@@ -1,7 +1,35 @@
 /* jshint undef: true, unused: true, devel:true */
-/* global angular: true , _: true, sessionStorage: true
+/* global angular: true , _: true, sessionStorage: true, angular:true, document: true
 */
 var controllerModule = angular.module('myApp.controller', []);
+
+
+controllerModule.controller('TopBannerController', ['$scope', 'UserService', function($scope, UserService){
+    
+    //退出
+    $scope.logout = function(){
+        UserService.logout().then(function(result){
+            result = result.data;
+
+            if (result.code === 0x00){
+                sessionStorage.removeItem('user');
+                $scope.user = null;
+            }else{
+                alert(result.msg);
+            }
+        });
+    };
+
+    $scope._init = function(){
+        var userJson = sessionStorage.user;
+        if (userJson){
+            $scope.user = JSON.parse(userJson);
+        }    
+    };
+    //init
+    $scope._init();
+
+}]);
 
 controllerModule.controller('IndexController', ['MenuService', '$scope',
         function(MenuService, $scope) {
@@ -138,6 +166,7 @@ controllerModule.controller('LoginController', ['$scope', 'UserService', '$locat
                 //sessionStorage does not support object, only string it seems
                 sessionStorage.user = JSON.stringify(result.data);
                 $location.path('/');
+                angular.element(document.getElementById('TopBannerController')).scope()._init();
             }else{
                 alert(result.msg);
             }

@@ -103,7 +103,8 @@ Project Init Procedure:
             
     ## angularjs
         [angularjs api doc](http://www.ngnice.com/docs/api)
-
+        [angularjs ui-router](http://joelhooks.com/blog/2013/07/22/the-basics-of-using-ui-router-with-angularjs/)
+        
     ## others
         [server side event] (http://www.html5rocks.com/en/tutorials/eventsource/basics/)
         [socketio chat demo](http://socket.io/get-started/chat/)
@@ -125,6 +126,11 @@ Project Init Procedure:
         前端bid对应的校验加上
         整理上传github
         nodejs 的登录拦截器
+        测试angularjs对$http请求的拦截
+        菜单页面现在有问题, 不知道是否是切换angularjs版本造成的
+        configure a express interceptor
+        angularjs的登录拦截器
+        设置登录 session 时常
         
 
     PENDING
@@ -137,10 +143,8 @@ Project Init Procedure:
 
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
         https://github.com/SublimeLinter/SublimeLinter-jshint
-        configure a express interceptor
+        用q.js 重构部分代码
 
-        设置登录 session 时常
-        angularjs的登录拦截器
         启动时候的用户状态清空
-        菜单页面现在有问题, 不知道是否是切换angularjs版本造成的
-        测试angularjs对$http请求的拦截
+        界面上加入退出, 登录
+

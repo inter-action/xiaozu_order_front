@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
   <% include ../partials/headers %>
 </head>
 <body>
-  <% include ../partials/header %>
-  <!-- -->
+  <% include ../partials/top_banner %>
   
-  <div ng-app="myApp">
-    <div ng-view></div> 
-  </div>
-  
+  <!-- angularjs template view port -->  
+  <div ng-view></div> 
   
   <% include ../partials/footer %>
 </body>
