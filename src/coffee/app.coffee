@@ -60,6 +60,9 @@ sessionOption =
     secret: 'secret_key'
     resave: false
     saveUninitialized: true
+    cookie:
+        maxAge: 1800000 #session duration, half hour
+
 app.use session(sessionOption)
 
 app.use (req, res, next)->
