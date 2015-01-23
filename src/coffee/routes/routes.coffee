@@ -31,7 +31,7 @@ MSG_BAD_GATEWAY = 'bad_gateway'
 
 router.get '/menus', (req, res)->
     dao.listMenus(null, (err, docs)->
-        res.send(500, MSG_BAD_GATEWAY) if err
+        res.status(500).send(err.stack) if err
         res.json(docs)
     )
 
@@ -74,7 +74,7 @@ router.post '/order/combo', (req, res)->
     # do post data here
     placeComboOrder postDataArr, (err, httpResponse, body)->
         if err
-            res.send 500, MSG_BAD_GATEWAY 
+            res.status(500).send(err.stack)
         else
             auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.typies.PLACE_ORDER}
             auditInstance.save() # we dont care if success or not
@@ -105,7 +105,7 @@ router.post '/order/single', (req, res)->
 
     placeSingleOrder postDataArr, (err, httpResponse, body)->
         if err
-            res.send 500, MSG_BAD_GATEWAY
+            res.status(500).send(err.stack)
         else
             auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.typies.PLACE_ORDER}
             auditInstance.save() # we dont care if success or not
@@ -125,8 +125,8 @@ router.post '/login', (req, res)->
             res.json({code: CODES.FAILURE, msg: "you already logined with user: #{req.session.username}"})
     else
         dao.UserModel.findOne {username: username}, (err, user)->
-            res.send(500, MSG_BAD_GATEWAY) if err
-            res.send(404, 'not found') if not user
+            res.status(500).send(err.stack) if err
+            res.status(400).end() if not user
 
             if user.isLogin is 1 and uesr.ip != req.ip
                 res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
@@ -135,7 +135,7 @@ router.post '/login', (req, res)->
                 user.ip = req.ip
                 user.save (err, instance)->
                     if err
-                        res.send(500, MSG_BAD_GATEWAY) 
+                        res.status(500).send(err.stack) 
                     else
                         req.session.user = instance 
                         res.json({code: CODES.SUCCESS, data: instance})
@@ -144,14 +144,14 @@ router.post '/login', (req, res)->
 router.post '/logout', (req, res)->
     if req.session.user
         dao.UserModel.findOne {username: req.session.user.username}, (err, user)->
-            res.send(500, MSG_BAD_GATEWAY) if err
-            res.send(404, 'not found') if not user
+            res.status(500).send(err.stack) if err
+            res.status(404).end() if not user
 
             user.isLogin = 0
             user.ip = req.ip
             user.save (err, userInstance)->
                 if err
-                    res.send(500, MSG_BAD_GATEWAY)
+                    res.status(500).send(err.stack)
                 else
                     req.session.destroy (err)->#we dont care if success or not in here
                     res.json({code: CODES.SUCCESS})
@@ -164,7 +164,7 @@ router.post '/logout', (req, res)->
 router.get '/users', (req, res)->
     dao.UserModel.find {}, (err, users)->
         if err
-            res.send 500, MSG_BAD_GATEWAY
+            res.status(500).send(err.stack)
         else
             res.json(users)
 
@@ -175,7 +175,7 @@ router.get '/auditlogs', (req, res)->
     now = new Date()
     today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     dao.AuditLogModel.find {createdTime: { $gte: today}}, (err, audits)->
-        if err then res.send(500, MSG_BAD_GATEWAY) else res.json({code: CODES.SUCCESS, data: audits})
+        if err then res.status(500).send(err.stack) else res.json({code: CODES.SUCCESS, data: audits})
 
 placeComboOrder = (dataArr, callback)->
     url = 'http://fuhua.xiaozufan.com/Index/orderadd'
