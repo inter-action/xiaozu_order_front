@@ -76,7 +76,7 @@ router.post '/order/combo', (req, res)->
         if err
             res.send 500, MSG_BAD_GATEWAY 
         else
-            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.types.PLACE_ORDER}
+            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.typies.PLACE_ORDER}
             auditInstance.save() # we dont care if success or not
 
             orderResult = JSON.parse(body)
@@ -107,7 +107,7 @@ router.post '/order/single', (req, res)->
         if err
             res.send 500, MSG_BAD_GATEWAY
         else
-            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.types.PLACE_ORDER}
+            auditInstance = new dao.AuditLogModel {body: JSON.stringify(data.audit), type: dao.AuditLogModel.typies.PLACE_ORDER}
             auditInstance.save() # we dont care if success or not
 
             orderResult = JSON.parse(body)
