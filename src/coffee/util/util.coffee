@@ -44,15 +44,15 @@ _request =
     post: (url, data, callback)->
         request.post({url:url, formData: data}, callback)
 
-    # 这个get方法调用完之后进程不自动关闭, 等着查下
+    #
     get: (url, callback)->
         #@params {http.IncomingMessage} resp , http://nodejs.org/api/http.html#http_http_incomingmessage
         #
         request.get(url).on 'response', (resp)->
-            console.log(resp.statusCode)
-            console.log(resp.headers['content-type'])
+            # console.log(resp.statusCode)
+            # console.log(resp.headers['content-type'])
             resp.on 'data', (buffer)->
-                console.log(buffer.toString('utf-8'))
+                callback(buffer.toString('utf-8'))
 
     # send a http post with json result
     # @params
@@ -74,7 +74,7 @@ _request =
         zhushi:194830
         quantity:1
     @params
-        url: String - 
+        url: String -
         dataArr: Array[Array] - 提交表单的二维数组
             eg.
             data = [
@@ -108,7 +108,7 @@ _request =
     setCookie: (url, cookieStr)->
         cookie = request.cookie(cookieStr)
         jar.setCookie(cookie, url)
-        # 
+        #
 
 _request.setCookie('http://fuhua.xiaozufan.com/', 'PHPSESSID=oc009ls05egr8uh06nhsgfnuv5')
 

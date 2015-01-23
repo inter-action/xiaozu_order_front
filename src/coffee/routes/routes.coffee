@@ -11,7 +11,7 @@ log = require '../logger/logger'
 common = require '../common/common'
 dao = require '../dao/dao'
 util = require '../util/util'
-CODES = require('../constant/constant').CODES 
+CODES = require('../constant/constant').CODES
 
 
 router = express.Router()
@@ -45,8 +45,8 @@ router.get '/menus', (req, res)->
         ['zhushi', '194830']
         ['quantity', '1']
     ]
-    
-    data = 
+
+    data =
         bid
         foodIds
         zhushi
@@ -122,22 +122,22 @@ router.post '/login', (req, res)->
         if username == req.session.username
             res.json({code: CODES.SUCCESS, data: req.session.user})
         else
-            res.json({code: CODES.FAILURE, msg: "you already logined with user: #{req.session.username}"})
+            res.json({code: CODES.FAILURE, msg: "you already logined with user: #{req.session.user.username}"})
     else
         dao.UserModel.findOne {username: username}, (err, user)->
             res.status(500).send(err.stack) if err
             res.status(400).end() if not user
 
-            if user.isLogin is 1 and uesr.ip != req.ip
+            if user.isLogin is 1 and user.ip != req.ip
                 res.json({code: CODES.FAILURE, msg: "#{username} is logined by this ip:#{user.ip}"})
             else # user is not login or user is login and his/her ip is same with the record in database
                 user.isLogin = 1
                 user.ip = req.ip
                 user.save (err, instance)->
                     if err
-                        res.status(500).send(err.stack) 
+                        res.status(500).send(err.stack)
                     else
-                        req.session.user = instance 
+                        req.session.user = instance
                         res.json({code: CODES.SUCCESS, data: instance})
 
 # 退出
@@ -149,11 +149,11 @@ router.post '/logout', (req, res)->
 
             user.isLogin = 0
             user.ip = req.ip
-            user.save (err, userInstance)->
+            user.save (err)->
                 if err
                     res.status(500).send(err.stack)
                 else
-                    req.session.destroy (err)->#we dont care if success or not in here
+                    req.session.destroy()#we dont care if success or not in here
                     res.json({code: CODES.SUCCESS})
     else
         res.json({code: CODES.FAILURE, msg: 'you are not logged-in'})

@@ -12,26 +12,14 @@ module.exports = function(grunt) {
 
     // Task configuration.
     jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        globals: {}
-      },
+      options: require( "./jshint.json" ).options,
       gruntfile: {
         src: 'Gruntfile.js'
       },
       lib_test: {
         src: ['lib/**/*.js', 'test/**/*.js']
-      }
+      },
+      files: ['src/js/**/*.js', 'spec/js/**/*.js']
     },
     nodeunit: {
       files: ['test/**/*_test.js']
