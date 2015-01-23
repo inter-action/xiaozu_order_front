@@ -100,7 +100,8 @@ Project Init Procedure:
         [request module - nodejs send http request](https://www.npmjs.com/package/request)
         [nodejs routes unit test](http://javascriptplayground.com/blog/2014/07/testing-express-routes/)
             这个方法倒是可以来用作单元测试, 总感觉缺少些原来的简洁性, 当然最好的办法就是end to end 的test
-            
+        [面向Node.js新手的7个技巧](http://dev.oupeng.com/articles/7-tips-for-a-nodejs-padawan)
+
     ## angularjs
         [angularjs api doc](http://www.ngnice.com/docs/api)
         [angularjs ui-router](http://joelhooks.com/blog/2013/07/22/the-basics-of-using-ui-router-with-angularjs/)
@@ -108,6 +109,9 @@ Project Init Procedure:
     ## others
         [server side event] (http://www.html5rocks.com/en/tutorials/eventsource/basics/)
         [socketio chat demo](http://socket.io/get-started/chat/)
+        [Travis CI, 项目持续构建]
+            http://www.cnblogs.com/whitewolf/archive/2013/04/14/3019838.html
+            http://www.cnblogs.com/huang0925/archive/2013/05/30/3108370.html
 
 # Project Description
     this is a project build with express framework 4.xx
@@ -135,6 +139,7 @@ Project Init Procedure:
         启动时候的用户状态清空
         下订单的日志记录
         add editor config 配置
+        用q.js 重构部分代码, 忽略, q 和 mongoose 一起用的时候, 在promise级联(channing)返回mongoose save的promise后得到的结果是一个数组
         
 
     PENDING
@@ -142,5 +147,5 @@ Project Init Procedure:
         config jshint
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
         https://github.com/SublimeLinter/SublimeLinter-jshint
-        用q.js 重构部分代码
         add bower
+
