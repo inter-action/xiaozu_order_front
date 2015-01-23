@@ -41,8 +41,24 @@ serviceModule.factory('UserService', ['$http',
             return $http.get('/users');
         };
 
-
-        
         return api;
     }
 ]);
+
+
+serviceModule.factory('CommonService', ['$http', function($http){
+    var api = {};
+
+    api.auditlogs = function(){
+        return $http.get('/auditlogs');
+    };
+
+    return api;
+}]);
+
+
+
+
+
+
+

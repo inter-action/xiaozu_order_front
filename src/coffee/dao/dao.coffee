@@ -46,7 +46,23 @@ UserSchemaOption =
 exports.UserModel = mongoose.model('User', userSchema = mongoose.Schema(UserSchemaOption))
 # ----------- end: user definition
 
+# ----------- start: AuditLog definition
+AuditLogSchemaOption
+    body:
+        type: String
+        required: true
+    type:
+        type: Number
+        required: true
+    createdTime:
+        type: Date
+        default: Date.now
 
+exports.AuditLogModel = mongoose.model('AuditLog', auditLogSchemaInstance = mongoose.Schema(AuditLogSchemaOption))
+exports.AuditLogModel.typies =
+    PLACE_ORDER: 0x00 # 下订单
+
+# ----------- end: AuditLog definition
 
 
 MENU_COLLECTION = 'menu'
@@ -85,5 +101,12 @@ exports.script =
                     assert.ok(docs.length == users.length)
                     console.log "successfully isnerted #{docs.length} records"
 
+    # 重置用户登录状态
+    resetUserLoginState: ->
+        exports.UserModel.update {}, {isLogin: 0}, (err, numAffected)->
+            if err then console.log err else console.log "#{numAffected} records updated"
+
+# ----- start: module init
+exports.script.resetUserLoginState()
 
 console.log('** DAO MODULE LOADED **')
