@@ -47,7 +47,7 @@ exports.UserModel = mongoose.model('User', userSchema = mongoose.Schema(UserSche
 # ----------- end: user definition
 
 # ----------- start: AuditLog definition
-AuditLogSchemaOption
+AuditLogSchemaOption =
     body:
         type: String
         required: true
@@ -101,9 +101,9 @@ exports.script =
                     assert.ok(docs.length == users.length)
                     console.log "successfully isnerted #{docs.length} records"
 
-    # 重置用户登录状态
+    # 重置用户登录状态, 注意multi选项, 否则一次只更新一条记录
     resetUserLoginState: ->
-        exports.UserModel.update {}, {isLogin: 0}, (err, numAffected)->
+        exports.UserModel.update {isLogin: 1}, {isLogin: 0}, {multi: true}, (err, numAffected)->
             if err then console.log err else console.log "#{numAffected} records updated"
 
 # ----- start: module init

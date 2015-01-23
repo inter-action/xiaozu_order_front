@@ -6,12 +6,12 @@ CONSTANTS =
     LOG_PATH: process.env.LOG_PATH || getUserHomeDirectory() + '/temp/log'
 
 CODES =
-	SUCCESS: 0x00
-	FAILURE: 0x01
-	NOT_LOGIN: 0x10
+    SUCCESS: 0x00
+    FAILURE: 0x01
+    NOT_LOGIN: 0x10
 
 module.exports = 
-	CONSTANTS: CONSTANTS
-	CODES: CODES
+    CONSTANTS: CONSTANTS
+    CODES: CODES
 
 console.log('** CONSTANT MODULE LOADED **')

@@ -1,8 +1,7 @@
 bunyan = require 'bunyan'
 fs = require 'fs'
 mkdirp = require 'mkdirp'
-constant = require '../constant/constant'
-
+constant = require('../constant/constant').CONSTANTS
 
 create_file_if_not_exsited = (files)->
     f = (path)->
