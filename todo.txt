@@ -133,18 +133,14 @@ Project Init Procedure:
         设置登录 session 时常
         界面上加入退出, 登录
         启动时候的用户状态清空
+        下订单的日志记录
+        add editor config 配置
         
 
     PENDING
         统一的错误拦截
-        下订单的日志记录
-            ip
-            下单的日志标示
-            
         config jshint
-
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
         https://github.com/SublimeLinter/SublimeLinter-jshint
         用q.js 重构部分代码
-
-
+        add bower

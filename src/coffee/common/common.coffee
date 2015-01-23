@@ -3,7 +3,7 @@ Date::trim = ->
 
 Date::shift = (milisecs)->
     new Date(this.getTime() + milisecs)
-
+    
 Date.A_DAY = 24 * 3600 * 1000
 
 class Pagination
