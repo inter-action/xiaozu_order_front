@@ -10,7 +10,7 @@ Project Init Procedure:
     coffeelint --makeconfig > coffeelint.json
         then change idention to 4 space
         change max_line_length to 140
-    
+
     npm install jasmine-node --save-dev
     npm install grunt-jasmine-node --save-dev
     npm install winston --save # logger, deprecated, winston logger cant logger `Error` object
@@ -111,7 +111,7 @@ Project Init Procedure:
     ## angularjs
         [angularjs api doc](http://www.ngnice.com/docs/api)
         [angularjs ui-router](http://joelhooks.com/blog/2013/07/22/the-basics-of-using-ui-router-with-angularjs/)
-        
+
     ## others
         [server side event] (http://www.html5rocks.com/en/tutorials/eventsource/basics/)
         [socketio chat demo](http://socket.io/get-started/chat/)
@@ -155,11 +155,11 @@ Project Init Procedure:
             1. 项目本身并不复杂, 不需要过多依赖
             2. bower下载的信息过多, 没有必要
             3. 由于当前的工作流不完善, bower下载下来的依赖需要自己添加到html中,并且会多少污染发布目录
+        config jshint
 
-        
+
 
     PENDING
         统一的错误拦截
-        config jshint
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
 
