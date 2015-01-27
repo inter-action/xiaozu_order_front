@@ -7,7 +7,7 @@
     html5 localStorage, sessionStorage,
  */
 
-var myApp = angular.module('myApp', ['myApp.controller', 'myApp.service', 'ngRoute']);
+var myApp = angular.module('myApp', ['myApp.controller', 'myApp.service', 'myapp.directive', 'ngRoute']);
 
 myApp.config(['$routeProvider', function($routeProvider){
     $routeProvider

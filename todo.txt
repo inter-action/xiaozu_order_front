@@ -162,4 +162,6 @@ Project Init Procedure:
     PENDING
         统一的错误拦截
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
+        add ajax spinner
+            http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
