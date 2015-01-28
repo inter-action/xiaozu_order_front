@@ -157,6 +157,8 @@ Project Init Procedure:
             3. 由于当前的工作流不完善, bower下载下来的依赖需要自己添加到html中,并且会多少污染发布目录
         config jshint
         添加子商家的快速跳转: 忽略, 已经改成了tab切换的模式
+        401的时候清除用户登录信息
+        今日订单中的详情显示金钱optional, 和ip地址
 
 
 
@@ -167,5 +169,3 @@ Project Init Procedure:
         add ajax spinner
             http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
-        今日订单中的详情显示金钱optional, 和ip地址
-        401的时候清除用户登录信息
