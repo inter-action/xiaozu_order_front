@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    <table class="table">
+      <thead>
+        <th>用户名</th><th>IP</th><th>是否登陆</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in users">
+          <td>{{user.username}}</td><td>{{user.ip}}</td><td>{{user.isLogin}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

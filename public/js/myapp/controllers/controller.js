@@ -212,8 +212,16 @@ controllerModule.controller('OrderTodayController', ['$scope', 'CommonService', 
 
         if (result.code === 0x00 && result.data.length !== 0){
             $scope.datas = _.map(result.data, function(_e){
-                return JSON.parse(_e.body);
+                var body = JSON.parse(_e.body);
+                body.createdTime = new Date(_e.createdTime);
+                return body;
             });
         }
+    });
+}]);
+
+controllerModule.controller('UserListController', ['$scope', 'UserService', function($scope, UserService){
+    UserService.list().then(function(result){
+        $scope.users = result.data;
     });
 }]);
