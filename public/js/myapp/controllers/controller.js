@@ -4,7 +4,7 @@
 var controllerModule = angular.module('myApp.controller', []);
 
 
-controllerModule.controller('TopBannerController', ['$scope', 'UserService', function($scope, UserService){
+controllerModule.controller('TopBannerController', ['$scope', '$location', 'UserService', function($scope, $location, UserService){
     
     //退出
     $scope.logout = function(){
@@ -13,12 +13,15 @@ controllerModule.controller('TopBannerController', ['$scope', 'UserService', fun
 
             if (result.code === 0x00){
                 sessionStorage.removeItem('user');
+                angular.element(document.getElementById('TopBannerController')).scope()._init();
+                $location.path('/login');
                 $scope.user = null;
             }else{
                 alert(result.msg);
             }
         });
     };
+
 
     $scope._init = function(){
         var userJson = sessionStorage.user;
@@ -28,7 +31,6 @@ controllerModule.controller('TopBannerController', ['$scope', 'UserService', fun
     };
     //init
     $scope._init();
-
 }]);
 
 controllerModule.controller('IndexController', ['MenuService', '$scope',

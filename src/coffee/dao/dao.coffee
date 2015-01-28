@@ -90,7 +90,7 @@ exports.script =
             if err
                 console.log err
             else
-                usernames = ['张硕', '袁海杰', '王鹤林', '朱海波', '赵鹏', '朱文豪']
+                usernames = ['张硕', '袁海杰', '王鹤林', '朱海波', '赵鹏', '朱文豪', '缪静']
                 users = []
 
                 for username in usernames

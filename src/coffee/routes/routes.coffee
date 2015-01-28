@@ -119,7 +119,7 @@ router.post '/login', (req, res)->
     assert.ok(username)
 
     if req.session.user
-        if username == req.session.username
+        if username == req.session.user.username
             res.json({code: CODES.SUCCESS, data: req.session.user})
         else
             res.json({code: CODES.FAILURE, msg: "you already logined with user: #{req.session.user.username}"})
@@ -156,7 +156,7 @@ router.post '/logout', (req, res)->
                     req.session.destroy()#we dont care if success or not in here
                     res.json({code: CODES.SUCCESS})
     else
-        res.json({code: CODES.FAILURE, msg: 'you are not logged-in'})
+        res.json({code: CODES.SUCCESS})
 
 
 #------------ start: users routes

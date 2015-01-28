@@ -1,5 +1,5 @@
 /* jshint undef: true, unused: true, devel:true */
-/* global angular: true, window: true, sessionStorage: true
+/* global angular: true, window: true, sessionStorage: true, document: true
 */
 
 /*
@@ -48,6 +48,9 @@ myApp.config(['$httpProvider', function ($httpProvider) {
                 if(rejection.status === 401) {
                     // todo: could not inject `$location` here
                     // $location.path('login');
+                    // 
+                    sessionStorage.removeItem('user');
+                    angular.element(document.getElementById('TopBannerController')).scope()._init();
                     window.location = '/#/login';
                 }
                 return $q.reject(rejection);
@@ -65,6 +68,7 @@ myApp.run(function($rootScope, $location) {
     // register listener to watch route changes
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
         if (!sessionStorage.user) {
+            angular.element(document.getElementById('TopBannerController')).scope()._init();
             // next.templateUrl 指向的是模板的地址
             // no logged user, we should be going to #login
             if (next.templateUrl == "/partials/login.html ") {
