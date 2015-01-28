@@ -11,6 +11,10 @@
   button.btn.btn-default {
     float: right;
   }
+  /* tabs */
+  ul.nav.nav-tabs {
+    margin-bottom: 1em;
+  }
 </style>
 <div class="container-fluid">
   <div class="row">
@@ -25,132 +29,121 @@
     <div class="col-lg-9">
       <!-- start: RIGHT PANEL -->
       <div ng-if="isCateA">
-        <div class="panel panel-default" ng-repeat="merchantContent in curMenu.contents">
-          <div class="panel-heading bg-primary">
-            <h3 class="panel-title">{{merchantContent.merchants_name}}</h3>
-          </div>
-          <div class="panel-body">
-            <!-- start: PANEL BODY -->
-            <div >
-              <div class="panel panel-default" >
-                <div class="panel-heading">
-                  荤素配
-                </div>
-                <div class="panel-body">
-                  <form>
-                    <div class="row">
-                      <div class="col-lg-4">
-                        <div class="panel panel-default">
-                          <!-- start: COMBOS -->
-                          <div class="panel-heading">{{merchantContent.contents[0].contents[0].combo_name}}</div>
-                          <div class="panel-body">
-                            <ul>
-                              <li ng-repeat="food in merchantContent.contents[0].contents[0].foods">
-                                <div class="checkbox">
-                                  <label>
-                                    <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 1, merchantContent.contents[0].contents[0].foods[$index])"> {{food.name}}
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          <!-- end: COMBOS -->
-                        </div>
-                      </div>
-                      <div class="col-lg-4">
-                        <div class="panel panel-default">
-                          <!-- start: COMBOS -->
-                          <div class="panel-heading">{{merchantContent.contents[0].contents[1].combo_name}}</div>
-                          <div class="panel-body">
-                            <ul>
-                              <li ng-repeat="food in merchantContent.contents[0].contents[1].foods">
-                                <div class="checkbox" >
-                                  <label>
-                                    <input type="checkbox" ng-click="chkCombo($event, merchantContent.bid, 2, merchantContent.contents[0].contents[1].foods[$index])"> {{food.name}}
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          <!-- end: COMBOS -->
-                        </div>
-                      </div>
-                      <div class="col-lg-4">
-                        <div class="panel panel-default">
-                          <!-- start: COMBOS -->
-                          <div class="panel-heading">{{merchantContent.contents[0].contents[2].combo_name}}</div>
-                          <div class="panel-body">
-                            <ul >
-                              <li ng-repeat="food in merchantContent.contents[0].contents[2].foods">
-                                <div class="radio" >
-                                  <label>
-                                    <input type="radio" name="group1" ng-click="chkCombo($event, merchantContent.bid, 3, merchantContent.contents[0].contents[2].foods[$index])"> {{food.name}}
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          <!-- end: COMBOS -->
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-2 col-md-offset-10">
-                        <button type="button" class="btn btn-primary" ng-click="comboAdd(merchantContent.bid)">添加</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
+        <ul class="nav nav-tabs">
+          <li ng-repeat="merchantContent in curMenu.contents" ng-class="{'active': $index == focusedMIdx }" ng-click="changeMerchantIdx($index)" role="presentation" ><a href="javascript:void(0);">{{merchantContent.merchants_name}}</a></li>
+        </ul>
 
-              <div class="panel panel-default" ng-if="merchantContent.contents[1]">
-                <div class="panel-heading">
-                  {{merchantContent.contents[1].subcate_name}}
-                </div>
-                <div class="panel-body">
-                  <ul class="form-inline">
-                    <li ng-repeat="food in merchantContent.contents[1].foods" class="form-group">
-                      {{food.name}} {{food.price}}元
-                      <button type="button" class="btn btn-default" aria-label="Left Align">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+        <div >
+          <div class="panel panel-default" >
+            <div class="panel-heading">
+              荤素配
             </div>
-          <!-- end: PANEL BODY -->
+            <div class="panel-body">
+              <form>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="panel panel-default">
+                      <!-- start: COMBOS -->
+                      <div class="panel-heading">{{curMenu.contents[focusedMIdx].contents[0].contents[0].combo_name}}</div>
+                      <div class="panel-body">
+                        <ul>
+                          <li ng-repeat="food in curMenu.contents[focusedMIdx].contents[0].contents[0].foods">
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" ng-click="chkCombo($event, curMenu.contents[focusedMIdx].bid, 1, curMenu.contents[focusedMIdx].contents[0].contents[0].foods[$index])"> {{food.name}}
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- end: COMBOS -->
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="panel panel-default">
+                      <!-- start: COMBOS -->
+                      <div class="panel-heading">{{curMenu.contents[focusedMIdx].contents[0].contents[1].combo_name}}</div>
+                      <div class="panel-body">
+                        <ul>
+                          <li ng-repeat="food in curMenu.contents[focusedMIdx].contents[0].contents[1].foods">
+                            <div class="checkbox" >
+                              <label>
+                                <input type="checkbox" ng-click="chkCombo($event, curMenu.contents[focusedMIdx].bid, 2, curMenu.contents[focusedMIdx].contents[0].contents[1].foods[$index])"> {{food.name}}
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- end: COMBOS -->
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="panel panel-default">
+                      <!-- start: COMBOS -->
+                      <div class="panel-heading">{{curMenu.contents[focusedMIdx].contents[0].contents[2].combo_name}}</div>
+                      <div class="panel-body">
+                        <ul >
+                          <li ng-repeat="food in curMenu.contents[focusedMIdx].contents[0].contents[2].foods">
+                            <div class="radio" >
+                              <label>
+                                <input type="radio" name="group1" ng-click="chkCombo($event, curMenu.contents[focusedMIdx].bid, 3, curMenu.contents[focusedMIdx].contents[0].contents[2].foods[$index])"> {{food.name}}
+                              </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- end: COMBOS -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-2 col-md-offset-10">
+                    <button type="button" class="btn btn-primary" ng-click="comboAdd(curMenu.contents[focusedMIdx].bid)">添加</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default" ng-if="curMenu.contents[focusedMIdx].contents[1]">
+            <div class="panel-heading">
+              {{curMenu.contents[focusedMIdx].contents[1].subcate_name}}
+            </div>
+            <div class="panel-body">
+              <ul class="form-inline">
+                <li ng-repeat="food in curMenu.contents[focusedMIdx].contents[1].foods" class="form-group">
+                  {{food.name}} {{food.price}}元
+                  <button type="button" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <div ng-if="!isCateA">
-        <div class="panel panel-default" ng-repeat="merchantContent in curMenu.contents">
-          <div class="panel-heading bg-primary">
-            <h3 class="panel-title">{{merchantContent.merchants_name}}</h3>
-          </div>
-          <div class="panel-body">
-            <!-- start: PANEL CONTENT -->
+        <ul class="nav nav-tabs">
+          <li ng-repeat="merchantContent in curMenu.contents" ng-class="{'active': $index == focusedMIdx }" ng-click="changeMerchantIdx($index)" role="presentation" ><a href="javascript:void(0);">{{merchantContent.merchants_name}}</a></li>
+        </ul>
 
-            <div ng-repeat="subCateContents in merchantContent.contents">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  {{subCateContents.subcate_name}}
-                </div>
-                <div class="panel-body">
-                  <ul class="form-inline">
-                    <li ng-repeat="food in subCateContents.foods" class="form-group">
-                      {{food.name}} {{food.price}}元
-                      <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addSingle(subCateContents.foods[$index])">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
+        <div ng-repeat="subCateContents in curMenu.contents[focusedMIdx].contents">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              {{subCateContents.subcate_name}}
             </div>
-
-            <!-- end: PANEL CONTENT -->
+            <div class="panel-body">
+              <ul class="form-inline">
+                <li ng-repeat="food in subCateContents.foods" class="form-group">
+                  {{food.name}} {{food.price}}元
+                  <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addSingle(subCateContents.foods[$index])">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

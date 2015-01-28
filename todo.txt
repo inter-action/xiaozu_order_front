@@ -165,3 +165,6 @@ Project Init Procedure:
         add ajax spinner
             http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
+        添加子商家的快速跳转
+        今日订单中的详情显示金钱optional, 和ip地址
+        将爬虫程序打成jar包, 之后通过连接刷新数据

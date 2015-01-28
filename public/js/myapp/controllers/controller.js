@@ -44,9 +44,13 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                 $scope.focusedIdx = idx;
                 $scope.curMenu = $scope.menus[$scope.focusedIdx];
                 $scope.isCateA = isCateA($scope.curMenu);
-
+                $scope.focusedMIdx = 0;
                 //清空荤素配的用户选择
                 $scope._comboCache = {};                
+            };
+
+            $scope.changeMerchantIdx = function(idx){
+                $scope.focusedMIdx = idx;
             };
 
             $scope.addSingle = function(food){
