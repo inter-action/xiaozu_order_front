@@ -137,7 +137,7 @@
             <div class="panel-body">
               <ul class="form-inline">
                 <li ng-repeat="food in subCateContents.foods" class="form-group">
-                  {{food.name}} {{food.price}}元
+                  <span title="{{food.name}}">{{food.name | limitTo: 12}} {{food.price}}元</span>
                   <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="addSingle(subCateContents.foods[$index])">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   </button>
