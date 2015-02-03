@@ -170,5 +170,6 @@ Project Init Procedure:
             http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
         将更新数据库的action操作换成socketio
+        更新数据库的密码校验加上
         
 
