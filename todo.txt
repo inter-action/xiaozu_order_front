@@ -159,17 +159,19 @@ Project Init Procedure:
         添加子商家的快速跳转: 忽略, 已经改成了tab切换的模式
         401的时候清除用户登录信息
         今日订单中的详情显示金钱optional, 和ip地址
+        将更新数据库的action操作换成socketio
+        将爬虫程序打成jar包, 之后通过连接刷新数据
 
 
 
     PENDING
         统一的错误拦截
-        将爬虫程序打成jar包, 之后通过连接刷新数据
         删除订单 http://fuhua.xiaozufan.com/Index/delorder/id/MzM3OTkwMw==?_=1421728799703
         add ajax spinner
             http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
-        将更新数据库的action操作换成socketio
         更新数据库的密码校验加上
-        
+            前段密码输入提示
+
+
 

@@ -16,8 +16,7 @@ session = require 'express-session'
 
 # my dependencies
 log = require './logger/logger'
-routes = require './routes/routes'
-CODES = require('./constant/constant').CODES 
+CODES = require('./constant/constant').CODES
 
 ROOT_PATH = path.normalize(__dirname + '/../../')
 
@@ -72,9 +71,12 @@ app.use (req, res, next)->
     else
         next()
 
+_exports = module.exports = {}
+_exports.server = http.createServer(app)
+routes = require './routes/routes'
+
 # set up routes
 app.use('/', routes)
-
 
 # catch 404 error
 app.use (req, res, next)->
@@ -107,9 +109,6 @@ app.use (error, req, res, next)->
 
 PORT = 3000
 #app.listen PORT
-app.server = http.createServer(app)
-app.server.listen(PORT)
-
-module.exports = app
+_exports.server.listen(PORT)
 
 console.log "app started at port: #{PORT} with env: #{env}"

@@ -8,7 +8,7 @@ serviceModule.factory('MenuService', ['$http',
         api.list = function(){
             return $http.get('/menus');
         };
-        
+
         //单点
         api.singleAdd = function(data){
             return $http.post('/order/single', {data: data});
@@ -32,7 +32,7 @@ serviceModule.factory('UserService', ['$http',
         api.login = function(username){
             return $http.post('/login', {username: username});
         };
-        
+
         api.logout = function(){
             return $http.post('/logout');
         };
@@ -52,10 +52,6 @@ serviceModule.factory('CommonService', ['$http', function($http){
     api.auditlogs = function(){
         return $http.get('/auditlogs');
     };
-
-    api.updatedb = function(){
-        return $http.post('/admin/updatedb');
-    }
 
     return api;
 }]);

@@ -1,11 +1,11 @@
 /* jshint undef: true, unused: true, devel:true */
-/* global angular: true , _: true, sessionStorage: true, angular:true, document: true
+/* global angular: true , _: true, sessionStorage: true, angular:true, document: true, io: true, window: true
 */
 var controllerModule = angular.module('myApp.controller', []);
 
 
 controllerModule.controller('TopBannerController', ['$scope', '$location', 'UserService', function($scope, $location, UserService){
-    
+
     //退出
     $scope.logout = function(){
         UserService.logout().then(function(result){
@@ -50,7 +50,7 @@ controllerModule.controller('IndexController', ['MenuService', '$scope',
                 $scope.isCateA = isCateA($scope.curMenu);
                 $scope.focusedMIdx = 0;
                 //清空荤素配的用户选择
-                $scope._comboCache = {};                
+                $scope._comboCache = {};
             };
 
             $scope.changeMerchantIdx = function(idx){
@@ -230,9 +230,43 @@ controllerModule.controller('UserListController', ['$scope', 'UserService', func
     });
 }]);
 
-controllerModule.controller('DBUpdatorController', ['$scope', 'CommonService', function($scope, CommonService){
-    CommonService.updatedb().then(function(result){
-        result = result.data;
-        $scope.result = result.data;
+controllerModule.controller('DBUpdatorController', ['$scope', function($scope){
+    function _get_host(){
+        return window.location.protocol + '//' + window.location.host;
+    }
+    if (!window._socket){
+        var host = _get_host();
+        window._socket = io.connect(host);
+    }
+    var topic_updatedb_updating = '/updatedb/updating';
+    var topick_updatedb_done = '/updatedb';
+
+    _unbind_socket_listeners();
+
+    $scope.result = '';
+
+    window._socket.on(topic_updatedb_updating, function (data) {
+        if (data.code === 0x00){
+            $scope.result += data.data;
+            $scope.$apply();
+        }
     });
+
+    window._socket.on('/updatedb/done', function(data){
+        var msg = 'process exit with code: ' + data.code;
+        console.log(msg);
+        alert(msg);
+    });
+
+    //todo: add password prompt
+    window._socket.emit(topick_updatedb_done, { pwd: 'asdfg' });
+
+    function _unbind_socket_listeners(){
+        window._socket.removeAllListeners(topic_updatedb_updating);
+        window._socket.removeAllListeners(topick_updatedb_done);
+    }
+    $scope.$on('$destroy', function(){
+        _unbind_socket_listeners();
+    });
+
 }]);

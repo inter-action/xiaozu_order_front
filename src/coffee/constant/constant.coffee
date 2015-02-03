@@ -8,6 +8,7 @@ CONSTANTS =
     # image folder path, with a default value of course
     LOG_PATH: process.env.LOG_PATH || getUserHomeDirectory() + '/temp/log'
     CRAWLER_JAR_NAME: 'XIAOZU_CRAWLER-assembly-0.1-SNAPSHOT.jar'
+    DB_UPDATE_PWD: 'asdfg'
 
 CONSTANTS.CRAWLER_JAR_PATH = ( ->
     rootpath = path.normalize(__dirname + '/../../../')
@@ -28,7 +29,7 @@ _validate_jar_exitence = ->
         throw new Error("cant not find crawler jar file in : #{CONSTANTS.CRAWLER_JAR_PATH}")
 
 
-module.exports = 
+module.exports =
     CONSTANTS: CONSTANTS
     CODES: CODES
 
