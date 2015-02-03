@@ -169,3 +169,6 @@ Project Init Procedure:
         add ajax spinner
             http://www.aplusdesign.com.au/blog/jquery-ajax-loader-spinner/
 
+        将更新数据库的action操作换成socketio
+        
+

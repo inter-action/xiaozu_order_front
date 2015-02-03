@@ -1,6 +1,12 @@
+#node modules
+child_process = require 'child_process'
+
+# 3rd party
 request = require 'request'
 _ = require 'underscore'
 
+#
+CONSTANT = require('../constant/constant').CONSTANTS
 class Pagination
     constructor: (@pageno, @max) ->
         @skip = (pageno - 1) * max
@@ -33,6 +39,7 @@ request = request.defaults({jar: jar})
 
 
 # https://github.com/request/request#forms
+# 用于发送 Http 请求
 _request =
     # send a http post
     # @params
@@ -121,6 +128,27 @@ encodeFormDataStr = (arr)->
 
     result.join('&')
 
+# Shell 交互
+_Shell = 
+    # child_process.exec has limitation of 512 memory usage
+    # @see http://stackoverflow.com/questions/5775088/is-it-possible-to-execute-an-external-program-from-within-node-js
+    # callback: (error, stdout, stderr)=>None
+    crawl_data: (callback)->
+        cmd = "java -jar #{CONSTANT.CRAWLER_JAR_PATH}"
+        child_process.exec(cmd, callback)
+
+    # update data with spawn child process
+    #@params ondata_cb {Function} (str)->
+    #@params onclose_cb {Function} (exit_code)->
+    spawn_crawl_data: (ondata_cb, onclose_cb)->
+        spawn = require('child_process').spawn
+        prc = spawn('java',  ['-jar', '-Xmx512M', '-Dfile.encoding=utf8', CONSTANT.CRAWLER_JAR_PATH]);
+
+        prc.stdout.setEncoding('utf8')
+        prc.stdout.on 'data', ondata_cb
+
+        prc.on 'close', onclose_cb
+
 scripts =
     testXiaozu: ->
         _request.get('http://fuhua.xiaozufan.com/Index/orderToday')
@@ -161,7 +189,21 @@ scripts =
             console.log(resp.statusCode)
             console.log(body)
 
+    testCrawData: ->
+        _Shell.crawl_data (err, stdout, stderr)->
+            data = err or stderr or stdout
+            console.log(data)
+
+    testSpwanCrawlData: ->
+        #http://stackoverflow.com/questions/6463052/how-to-pass-two-anonymous-functions-as-arguments-in-coffescript
+        _Shell.spawn_crawl_data \
+            (data)->
+                console.log(data)
+            ,(code)->
+                console.log("process exit code is: #{code}")
+
 module.exports =
     Pagination: Pagination
     request: _request
     scripts: scripts
+    Shell: _Shell

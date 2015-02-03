@@ -27,7 +27,9 @@ controllerModule.controller('TopBannerController', ['$scope', '$location', 'User
         var userJson = sessionStorage.user;
         if (userJson){
             $scope.user = JSON.parse(userJson);
-        }    
+        }else{
+            $scope.user = null;
+        }
     };
     //init
     $scope._init();
@@ -225,5 +227,12 @@ controllerModule.controller('OrderTodayController', ['$scope', 'CommonService', 
 controllerModule.controller('UserListController', ['$scope', 'UserService', function($scope, UserService){
     UserService.list().then(function(result){
         $scope.users = result.data;
+    });
+}]);
+
+controllerModule.controller('DBUpdatorController', ['$scope', 'CommonService', function($scope, CommonService){
+    CommonService.updatedb().then(function(result){
+        result = result.data;
+        $scope.result = result.data;
     });
 }]);

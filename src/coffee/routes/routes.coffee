@@ -177,6 +177,18 @@ router.get '/auditlogs', (req, res)->
     dao.AuditLogModel.find {createdTime: { $gte: today}}, (err, audits)->
         if err then res.status(500).send(err.stack) else res.json({code: CODES.SUCCESS, data: audits})
 
+#---- admin
+router.post '/admin/updatedb', (req, res)->
+    result = ''
+    util.Shell.spawn_crawl_data \
+        (data)->
+            result += data
+        , (code)->
+            if code is 0
+                res.json({code: CODES.SUCCESS, data: result})
+            else
+                res.json({code: CODES.FAILURE, msg: code})
+
 placeComboOrder = (dataArr, callback)->
     url = 'http://fuhua.xiaozufan.com/Index/orderadd'
     util.request.postJSONRaw(url, dataArr, callback)

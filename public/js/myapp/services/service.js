@@ -53,6 +53,10 @@ serviceModule.factory('CommonService', ['$http', function($http){
         return $http.get('/auditlogs');
     };
 
+    api.updatedb = function(){
+        return $http.post('/admin/updatedb');
+    }
+
     return api;
 }]);
 

@@ -27,6 +27,10 @@ myApp.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/ordertoday.html',
             controller: 'OrderTodayController'
         })
+        .when('/admin/updatedb', {
+            templateUrl: '/partials/updatedb.html',
+            controller: 'DBUpdatorController'
+        })
         .when('/404', {
             templateUrl: '/404.html'
         })
