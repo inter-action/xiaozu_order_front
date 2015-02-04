@@ -178,6 +178,7 @@ router.get '/auditlogs', (req, res)->
         if err then res.status(500).send(err.stack) else res.json({code: CODES.SUCCESS, data: audits})
 
 
+# ---------------- start: socketio -----------------
 server = require('../app').server
 socketio = require('socket.io')(server)
 
@@ -194,9 +195,10 @@ socketio.on 'connection', (socket)->
                     socket.emit('/updatedb/done', {code: CODES.SUCCESS})
 
         else
-            socket.emit('/updatedb/updating', {code: CODES.FAILURE, msg: 'inlegal password'})
+            socket.emit('/updatedb', {code: CODES.FAILURE, msg: 'illegal password'})
 
 
+# ---------------- end: socketio -----------------
 
 placeComboOrder = (dataArr, callback)->
     url = 'http://fuhua.xiaozufan.com/Index/orderadd'

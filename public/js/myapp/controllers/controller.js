@@ -238,13 +238,15 @@ controllerModule.controller('DBUpdatorController', ['$scope', function($scope){
         var host = _get_host();
         window._socket = io.connect(host);
     }
+    var topick_updatedb = '/updatedb';
     var topic_updatedb_updating = '/updatedb/updating';
-    var topick_updatedb_done = '/updatedb';
+    var topick_updatedb_done = '/updatedb/done';
 
     _unbind_socket_listeners();
 
     $scope.result = '';
 
+    //监听数据更新
     window._socket.on(topic_updatedb_updating, function (data) {
         if (data.code === 0x00){
             $scope.result += data.data;
@@ -252,19 +254,31 @@ controllerModule.controller('DBUpdatorController', ['$scope', function($scope){
         }
     });
 
-    window._socket.on('/updatedb/done', function(data){
+    //监听数据更新完成
+    window._socket.on(topick_updatedb_done, function(data){
         var msg = 'process exit with code: ' + data.code;
         console.log(msg);
         alert(msg);
     });
 
-    //todo: add password prompt
-    window._socket.emit(topick_updatedb_done, { pwd: 'asdfg' });
+    //监听请求更新的错误提示信息
+    window._socket.on(topick_updatedb, function(data){
+        if (data.code !== 0x00){
+            alert(data.msg);
+        }
+    });
+
+    var pwd = prompt('enter your password')
+    if (pwd){
+        window._socket.emit(topick_updatedb, { pwd: pwd });
+    }
 
     function _unbind_socket_listeners(){
+        window._socket.removeAllListeners(topick_updatedb);
         window._socket.removeAllListeners(topic_updatedb_updating);
         window._socket.removeAllListeners(topick_updatedb_done);
     }
+    
     $scope.$on('$destroy', function(){
         _unbind_socket_listeners();
     });

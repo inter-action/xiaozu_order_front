@@ -8,3 +8,5 @@ MEAN STACK 的小的工程, 用来帮助在小组饭网站下订单
 
 ![Alt text](/screenshot/order_type2.png?raw=true "Optional Title")
 
+![Alt text](/screenshot/updatedb.png?raw=true "Optional Title")
+
